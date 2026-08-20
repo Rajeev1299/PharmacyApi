@@ -18,10 +18,12 @@
   <ItemGroup>
     <PackageReference Include="Mapster" Version="10.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Datas\" />
+    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

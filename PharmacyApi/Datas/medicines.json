@@ -1,3 +1,29 @@
 [
-
+  {
+    "Id": 1,
+    "FullName": "Acrivastine",
+    "Notes": "Acrivastine is an antihistamine medicine that helps the symptoms of allergies.",
+    "ExpiryDate": "2027-08-20T17:40:31.383Z",
+    "Quantity": 12,
+    "Price": 300,
+    "Brand": "Benadryl Allergy Relief"
+  },
+  {
+    "Id": 2,
+    "FullName": "Amlodipine",
+    "Notes": "Amlodipine is a medicine used to treat high blood pressure and angina. It\u0027s only available with a prescription.",
+    "ExpiryDate": "2026-09-15T17:40:31.383Z",
+    "Quantity": 10,
+    "Price": 300,
+    "Brand": "Avycaz Vials"
+  },
+  {
+    "Id": 3,
+    "FullName": "Alogliptin",
+    "Notes": "Alogliptin is a medicine used to treat type 2 diabetes. It\u0027s only available with a prescription.",
+    "ExpiryDate": "2026-09-15T17:40:31.383Z",
+    "Quantity": 3,
+    "Price": 95,
+    "Brand": "Cipla"
+  }
 ]

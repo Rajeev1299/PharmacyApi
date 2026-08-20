@@ -1,3 +1,23 @@
 [
-
+  {
+    "Id": 1,
+    "MedicineId": 3,
+    "QuantitySold": 5,
+    "TotalPrice": 475,
+    "SaleDate": "2026-08-20T18:14:13.8990822Z"
+  },
+  {
+    "Id": 2,
+    "MedicineId": 1,
+    "QuantitySold": 5,
+    "TotalPrice": 1500,
+    "SaleDate": "2026-08-20T18:14:59.2775493Z"
+  },
+  {
+    "Id": 3,
+    "MedicineId": 1,
+    "QuantitySold": 3,
+    "TotalPrice": 900,
+    "SaleDate": "2026-08-20T18:15:21.8214343Z"
+  }
 ]

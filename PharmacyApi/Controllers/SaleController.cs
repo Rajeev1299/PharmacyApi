@@ -10,47 +10,43 @@ namespace PharmacyApi.Controllers
     [ApiController]
     public class SaleController : ControllerBase
     {
-        private readonly IGeneriRepository<Sale> _genericRepo;
-
-        public SaleController(IGeneriRepository<Sale> genericRepo)
+        private readonly IGeneriRepository<Sale> _saleRepo;
+        private readonly IGeneriRepository<Medicine> _medicineRepo;
+        public SaleController(IGeneriRepository<Sale> SaleRepo, IGeneriRepository<Medicine> medicineRepo)
         {
-            _genericRepo = genericRepo;
+            _saleRepo = SaleRepo;
+            _medicineRepo = medicineRepo;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<ViewSaleDto>>> GetAllAsync(int medicineId)
         {
-            var results = await _genericRepo.GetAllAsync();
+            var results = await _saleRepo.GetAllAsync();
             var response = results.Where(x => x.MedicineId == medicineId).Adapt<List<ViewSaleDto>>();
             return Ok(response);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<ViewMedicineDto>> GetAsync(int id)
-        {
-            var results = (await _genericRepo.GetByIdAsync(id)).Adapt<ViewSaleDto>();
-            return Ok(results);
-        }
-
         [HttpPost]
-        public async Task<ActionResult<ViewMedicineDto>> AddAsync(SaleDto entity)
+        public async Task<ActionResult<ViewSaleDto>> RecordSaleAsync(int medicineId, int quantitySold)
         {
-            var results = (await _genericRepo.AddAsync(entity.Adapt<Sale>())).Adapt<ViewSaleDto>();
-            return Ok(results);
-        }
+            var medicine = await _medicineRepo.GetByIdAsync(medicineId)
+            ?? throw new KeyNotFoundException("Medicine not found");
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult> UpdateAsync(int id, UpdateSaleDto entity)
-        {
-            await _genericRepo.UpdateAsync(entity.Adapt<Sale>());
-            return Ok("Successfully updated");
-        }
+            if (medicine.Quantity < quantitySold)
+                throw new InvalidOperationException("Not enough stock");
 
-        [HttpDelete("{id:int}")]
-        public async Task<ActionResult> DeleteAsync(int id)
-        {
-            await _genericRepo.DeleteAsync(id);
-            return Ok("Successfully deleted");
+            medicine.Quantity -= quantitySold;
+            await _medicineRepo.UpdateAsync(medicine);
+
+            var sale = new Sale
+            {
+                MedicineId = medicineId,
+                QuantitySold = quantitySold,
+                TotalPrice = medicine.Price * quantitySold,
+                SaleDate = DateTime.UtcNow
+            };
+            var result = await _saleRepo.AddAsync(sale);
+            return Ok(result.Adapt<ViewSaleDto>());
         }
     }
 }
